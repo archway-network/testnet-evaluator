@@ -1,0 +1,6 @@
+[submodule "cosmologger"]
+	path = cosmologger
+	url = git@github.com:archway-network/cosmologger.git
+[submodule "valuter"]
+	path = valuter
+	url = git@github.com:archway-network/valuter.git
