@@ -15,7 +15,7 @@ services:
           max-size: "200k"
           max-file: "10"
       volumes:
-        - ./valuter:/app
+        - ./valuter/conf.json:/app/conf.json
         - ./valuter:/go/src/app
       networks:
         - archwaynetwork
@@ -54,7 +54,7 @@ services:
         max-file: "10"
     volumes:
       - ./cosmologger:/go/src/app  # We need it for development
-      - ./cosmologger:/app
+      - ./cosmologger/conf.json:/app/conf.json
     networks:
       - archwaynetwork
     environment:
