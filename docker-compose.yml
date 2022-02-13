@@ -58,7 +58,7 @@ services:
     networks:
       - archwaynetwork
     environment:
-      RPC_ADDRESS: ${RPC_ADDRESS:-https://rpc.augusta-1.archway.tech:443}
+      RPC_ADDRESS: ${RPC_ADDRESS:-tcp://localhost:26657}
       GRPC_ADDRESS: ${RPC_ADDRESS:-grpc.augusta-1.archway.tech:443}
       POSTGRES_DB: ${POSTGRES_DB:-cosmologger}
       POSTGRES_USER: ${POSTGRES_USER:-root}
