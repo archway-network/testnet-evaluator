@@ -60,6 +60,7 @@ services:
     environment:
       RPC_ADDRESS: ${RPC_ADDRESS:-tcp://192.168.188.26:26657}
       GRPC_ADDRESS: ${RPC_ADDRESS:-grpc.augusta-1.archway.tech:443}
+      GRPC_TLS: ${GRPC_TLS:-true}
       POSTGRES_DB: ${POSTGRES_DB:-cosmologger}
       POSTGRES_USER: ${POSTGRES_USER:-root}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
