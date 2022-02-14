@@ -25,7 +25,7 @@ services:
         POSTGRES_USER: ${POSTGRES_USER:-root}
         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
         POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-        POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+        POSTGRES_HOST: ${POSTGRES_HOST:-postgrestmp}
       healthcheck:
         test: curl --fail http://localhost:8080/ || exit 1
         interval: 30s
@@ -33,6 +33,35 @@ services:
       restart: always
       security_opt:
         - "seccomp:unconfined"
+
+  #----------------#
+
+  valuter-ui:
+    image: archwaynetwork/valuter-ui:latest
+    container_name: valuter-ui
+    build:
+      context: ./valuter-ui
+      # target: development  # development | test | production (default) # docker-compose up --build
+    ports: 
+      - 8081:80
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    volumes:
+      - ./valuter-ui:/root/src
+    networks:
+      - archwaynetwork
+    environment:
+      API_ADDRESS: ${API_ADDRESS:-http://localhost:8080} 
+    healthcheck:
+      test: curl --fail http://localhost:8081/ || exit 1
+      interval: 30s
+      retries: 10 # Will try for 5 minutes      
+    restart: always
+    security_opt:
+      - "seccomp:unconfined"
 
   #----------------#
 
@@ -116,7 +145,32 @@ services:
       - archwaynetwork
     restart: unless-stopped
 
-  #----------------#  
+  #----------------# 
+
+
+  postgrestmp:
+    container_name: postgrestmp
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-cosmologger}
+      POSTGRES_USER: ${POSTGRES_USER:-root}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5434}
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgrestmp}
+    volumes:
+      - ~/cosmologger_db:/var/lib/postgresql/data
+    networks:
+      - archwaynetwork
+    ports:
+      - 5434:5434
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    restart: always
+
+  #----------------# 
 
 networks:
   archwaynetwork:
