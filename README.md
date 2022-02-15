@@ -1,5 +1,5 @@
 # Testnet Evaluator
-This repo combines various tools required for Testenet evaluation, including:
+This repo combines various tools required for Testnet evaluation, including:
 
 1. [cosmologger](https://github.com/archway-network/cosmologger) which collects blocks and transactions as they are happening in a cosmos based network.
 2. [valuter](https://github.com/archway-network/valuter) which is a testnet evaluator tool that is linked with `cosmologger` database and extracts the winners information.
