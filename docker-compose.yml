@@ -51,6 +51,7 @@ services:
         max-file: "10"
     volumes:
       - ./valuter-ui:/root/src
+      - ./valuter-ui/public/conf.js:/usr/share/nginx/html/conf.js
     networks:
       - archwaynetwork
     environment:
