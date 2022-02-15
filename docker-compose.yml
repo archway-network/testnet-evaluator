@@ -41,7 +41,6 @@ services:
     container_name: valuter-ui
     build:
       context: ./valuter-ui
-      # target: development  # development | test | production (default) # docker-compose up --build
     ports: 
       - 8081:80
     logging:
@@ -54,8 +53,6 @@ services:
       - ./valuter-ui/public/conf.js:/usr/share/nginx/html/conf.js
     networks:
       - archwaynetwork
-    environment:
-      API_ADDRESS: ${API_ADDRESS:-http://localhost:8080} 
     healthcheck:
       test: curl --fail http://localhost:8081/ || exit 1
       interval: 30s
