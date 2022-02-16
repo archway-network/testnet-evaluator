@@ -25,7 +25,7 @@ services:
         POSTGRES_USER: ${POSTGRES_USER:-root}
         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
         POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-        POSTGRES_HOST: ${POSTGRES_HOST:-postgrestmp}
+        POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
       healthcheck:
         test: curl --fail http://localhost:8080/ || exit 1
         interval: 30s
@@ -85,8 +85,8 @@ services:
       - archwaynetwork
     environment:
       RPC_ADDRESS: ${RPC_ADDRESS:-tcp://192.168.188.26:26657}
-      GRPC_ADDRESS: ${GRPC_ADDRESS:-grpc.augusta-1.archway.tech:443}
-      GRPC_TLS: ${GRPC_TLS:-true}
+      GRPC_ADDRESS: ${GRPC_ADDRESS:-192.168.188.26:9090}
+      GRPC_TLS: ${GRPC_TLS:-false}
       POSTGRES_DB: ${POSTGRES_DB:-cosmologger}
       POSTGRES_USER: ${POSTGRES_USER:-root}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
@@ -142,31 +142,6 @@ services:
     networks:
       - archwaynetwork
     restart: unless-stopped
-
-  #----------------# 
-
-
-  postgrestmp:
-    container_name: postgrestmp
-    image: postgres:latest
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-cosmologger}
-      POSTGRES_USER: ${POSTGRES_USER:-root}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
-      POSTGRES_PORT: ${POSTGRES_PORT:-5434}
-      POSTGRES_HOST: ${POSTGRES_HOST:-postgrestmp}
-    volumes:
-      - ~/cosmologger_db:/var/lib/postgresql/data
-    networks:
-      - archwaynetwork
-    ports:
-      - 5434:5434
-    healthcheck:
-      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
-      timeout: 45s
-      interval: 10s
-      retries: 10
-    restart: always
 
   #----------------# 
 
