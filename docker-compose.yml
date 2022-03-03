@@ -5,7 +5,7 @@ services:
       container_name: valuter
       build:
         context: ./valuter
-        # target: development  # development | test | production (default) # docker-compose up --build
+        target: development  # development | test | production (default) # docker-compose up --build
       ports: 
         - 8080:8080
         - 2346:2345
@@ -26,6 +26,9 @@ services:
         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
         POSTGRES_PORT: ${POSTGRES_PORT:-5432}
         POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+        KYC_API_KEY: ${API_KEY:-R3EibZkLniyqAjcwbV3Kaaa5vMSbJTHQ}
+        KYC_CLIENT_ID: ${CLIENT_ID:-S978E872D1FC90DF}
+        KYC_API_PATH: ${API_PATH:-https://individual-api.synaps.io/v3}
       healthcheck:
         test: curl --fail http://localhost:8080/ || exit 1
         interval: 30s
@@ -165,9 +168,9 @@ services:
       - archwaynetwork
     environment:
       SERVING_ADDR: ${SERVING_ADDR:-:80} 
-      API_KEY: ${API_KEY:-R3EibZkLniyqAjcwbV3Kaaa5vMSbJTHQ}
-      CLIENT_ID: ${CLIENT_ID:-S978E872D1FC90DF}
-      API_PATH: ${API_PATH:-https://individual-api.synaps.io/v3}
+      KYC_API_KEY: ${API_KEY:-R3EibZkLniyqAjcwbV3Kaaa5vMSbJTHQ}
+      KYC_CLIENT_ID: ${CLIENT_ID:-S978E872D1FC90DF}
+      KYC_API_PATH: ${API_PATH:-https://individual-api.synaps.io/v3}
     healthcheck:
       test: curl --fail http://localhost:80/ || exit 1
       interval: 30s
