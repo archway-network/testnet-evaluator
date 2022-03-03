@@ -68,7 +68,7 @@ services:
     container_name: cosmologger
     build:
       context: ./cosmologger
-      # target: development  # development | test | production (default) # docker-compose up --build
+      target: development  # development | test | production (default) # docker-compose up --build
     depends_on: 
       - postgres
     ports: 
@@ -143,6 +143,35 @@ services:
       - archwaynetwork
     restart: unless-stopped
 
+  #----------------# 
+
+  synaps-verifier:
+    image: archwaynetwork/synaps-verifier:latest
+    container_name: synaps-verifier
+    build:
+      context: ./synaps-verifier
+      target: development  # development | test | production (default) # docker-compose up --build
+    ports: 
+      - 8000:80
+      - 2347:2345
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    networks:
+      - archwaynetwork
+    environment:
+      SERVING_ADDR: ${SERVING_ADDR:-:80} 
+      API_KEY: ${API_KEY:-R3EibZkLniyqAjcwbV3Kaaa5vMSbJTHQ}
+      CLIENT_ID: ${CLIENT_ID:-S978E872D1FC90DF}
+    healthcheck:
+      test: curl --fail http://localhost:80/ || exit 1
+      interval: 30s
+      retries: 10 # Will try for 5 minutes      
+    restart: always
+    security_opt:
+      - "seccomp:unconfined"  
   #----------------# 
 
 networks:

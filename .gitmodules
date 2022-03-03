@@ -7,3 +7,6 @@
 [submodule "valuter-ui"]
 	path = valuter-ui
 	url = git@github.com:archway-network/valuter-ui.git
+[submodule "synaps-verifier"]
+	path = synaps-verifier
+	url = git@github.com:archway-network/synaps-verifier.git
