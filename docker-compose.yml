@@ -150,10 +150,12 @@ services:
     container_name: synaps-verifier
     build:
       context: ./synaps-verifier
-      target: development  # development | test | production (default) # docker-compose up --build
+      # target: development  # development | test | production (default) # docker-compose up --build
     ports: 
       - 8000:80
       - 2347:2345
+    volumes:
+      - ./synaps-verifier:/go/src/app
     logging:
       driver: "json-file"
       options:
@@ -165,6 +167,7 @@ services:
       SERVING_ADDR: ${SERVING_ADDR:-:80} 
       API_KEY: ${API_KEY:-R3EibZkLniyqAjcwbV3Kaaa5vMSbJTHQ}
       CLIENT_ID: ${CLIENT_ID:-S978E872D1FC90DF}
+      API_PATH: ${API_PATH:-https://individual-api.synaps.io/v3}
     healthcheck:
       test: curl --fail http://localhost:80/ || exit 1
       interval: 30s
