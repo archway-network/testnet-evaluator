@@ -20,15 +20,15 @@ services:
       networks:
         - archwaynetwork
       environment:
-        SERVING_ADDR: ${SERVING_ADDR:-:8080} 
+        SERVING_ADDR: ${VALUTER_SERVING_ADDR:-:8080} 
         POSTGRES_DB: ${POSTGRES_DB:-cosmologger}
         POSTGRES_USER: ${POSTGRES_USER:-root}
         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
         POSTGRES_PORT: ${POSTGRES_PORT:-5432}
         POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
-        KYC_API_KEY: ${API_KEY:-R3EibZkLniyqAjcwbV3Kaaa5vMSbJTHQ}
-        KYC_CLIENT_ID: ${CLIENT_ID:-S978E872D1FC90DF}
-        KYC_API_PATH: ${API_PATH:-https://individual-api.synaps.io/v3}
+        KYC_API_KEY: ${KYC_API_KEY:-R3EibZkLniyqAjcwbV3Kaaa5vMSbJTHQ}
+        KYC_CLIENT_ID: ${KYC_CLIENT_ID:-S978E872D1FC90DF}
+        KYC_API_PATH: ${KYC_API_PATH:-https://individual-api.synaps.io/v3}
       healthcheck:
         test: curl --fail http://localhost:8080/ || exit 1
         interval: 30s
@@ -87,8 +87,8 @@ services:
     networks:
       - archwaynetwork
     environment:
-      RPC_ADDRESS: ${RPC_ADDRESS:-tcp://192.168.188.26:26657}
-      GRPC_ADDRESS: ${GRPC_ADDRESS:-192.168.188.26:9090}
+      RPC_ADDRESS: ${RPC_ADDRESS:-}
+      GRPC_ADDRESS: ${GRPC_ADDRESS:-}
       GRPC_TLS: ${GRPC_TLS:-false}
       POSTGRES_DB: ${POSTGRES_DB:-cosmologger}
       POSTGRES_USER: ${POSTGRES_USER:-root}
@@ -109,7 +109,7 @@ services:
     container_name: postgres
     image: postgres:latest
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-cosmologger}
+      POSTGRES_DB: ${POSTGRES_DB:-}
       POSTGRES_USER: ${POSTGRES_USER:-root}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
@@ -167,10 +167,10 @@ services:
     networks:
       - archwaynetwork
     environment:
-      SERVING_ADDR: ${SERVING_ADDR:-:80} 
-      KYC_API_KEY: ${API_KEY:-R3EibZkLniyqAjcwbV3Kaaa5vMSbJTHQ}
-      KYC_CLIENT_ID: ${CLIENT_ID:-S978E872D1FC90DF}
-      KYC_API_PATH: ${API_PATH:-https://individual-api.synaps.io/v3}
+      SERVING_ADDR: ${SYNAPS_VERIFIER_SERVING_ADDR:-:80} 
+      KYC_API_KEY: ${KYC_API_KEY:-}
+      KYC_CLIENT_ID: ${KYC_CLIENT_ID:-}
+      KYC_API_PATH: ${KYC_API_PATH:-https://individual-api.synaps.io/v3}
     healthcheck:
       test: curl --fail http://localhost:80/ || exit 1
       interval: 30s
