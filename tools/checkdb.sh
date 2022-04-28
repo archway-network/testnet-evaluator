@@ -17,11 +17,16 @@ LIST_OF_ERR=""
 
 function main(){
 
-    echo -e "\nChecking for missed blocks in the database...\n"
+    echo -e "\nChecking for missed blocks in the database..."
 
     local LAST_BLOCK=$(psql -d ${POSTGRES_DB} -c "SELECT MAX(height) FROM blocks" -tq | xargs)
 
-    echo -e "\n\nLast block in the database: ${LAST_BLOCK}\n"
+    if [ -z "${LAST_BLOCK}" ]; then
+        echo "No blocks in the database"
+        LAST_BLOCK=0
+    fi
+
+    echo -e "Last block in the database: ${LAST_BLOCK}\n"
 
     find_missing_blocks 1 $LAST_BLOCK
 
@@ -40,7 +45,7 @@ function find_missing_blocks(){
     if [ $TOTAL_BLOCKS != $EXPECTED_BLOCKS ]; then
         
         if [ $START == $END ]; then
-            echo -e "\n\nBlock: ${START} is missing"
+            echo -e "Block: ${START} is missing"
             LIST_OF_ERR="${LIST_OF_ERR}${START}, "
         else
             # Call it recursively
