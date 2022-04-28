@@ -30,7 +30,14 @@ function main(){
 
     find_missing_blocks 1 $LAST_BLOCK
 
-    echo -e "\n\nList of Failed blocks: \n\n${LIST_OF_ERR}\n\n"
+    
+    if [ -z ${LIST_OF_ERR} ]; then
+        echo -e "\nNo missed blocks found\n"
+    else
+        echo -e "\nMissed blocks found:"
+        echo -e "\n${LIST_OF_ERR}\n\n"
+    fi
+
 }
 
 #------------------------#
